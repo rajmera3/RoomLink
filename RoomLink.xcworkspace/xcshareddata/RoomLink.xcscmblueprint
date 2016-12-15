@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "FADB91F5CAEF386A67BC982A42E9369B0C8E93FD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D4D098B8A5BDE082DC57AEF8E6FE071B527526A5" : 9223372036854775807,
+    "FADB91F5CAEF386A67BC982A42E9369B0C8E93FD" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9CDC79DC-FF10-4200-8C45-A022DF94F694",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D4D098B8A5BDE082DC57AEF8E6FE071B527526A5" : "..\/MealsOnWheels\/MealsOnWheelsV2",
+    "FADB91F5CAEF386A67BC982A42E9369B0C8E93FD" : "RoomLink\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "RoomLink",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "RoomLink.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/code-bot\/MealsOnWheelsV2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D4D098B8A5BDE082DC57AEF8E6FE071B527526A5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rajmera3\/RoomLink.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FADB91F5CAEF386A67BC982A42E9369B0C8E93FD"
+    }
+  ]
+}

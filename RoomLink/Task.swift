@@ -15,6 +15,7 @@ class Task: Object {
     dynamic var createdAt = NSDate()
     dynamic var notes = ""
     dynamic var isCompleted = false
+    dynamic var addedBy = ""
     
 // Specify properties to ignore (Realm won't persist these)
     

@@ -1,0 +1,6 @@
+framework module Pods_RoomLink {
+  umbrella header "Pods-RoomLink-umbrella.h"
+
+  export *
+  module * { export * }
+}

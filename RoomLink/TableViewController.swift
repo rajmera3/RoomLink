@@ -16,8 +16,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var navBar: UINavigationBar = UINavigationBar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
     
     
-    var lists: Results<TaskList>!
-    var grocerylist: [String] = []
+    var lists: List<Task>!
+    var notificationToken: NotificationToken!
+    var realm: Realm!
+    //var grocerylist: [String] = []
     
     func configureView(){
         self.view.addSubview(tableView)
@@ -25,11 +27,46 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func readTasksandUpdateUI(){
-        lists = uiRealm.objects(TaskList.self)
+        //lists = uiRealm.objects(Task.self)
         self.tableView.tasksTable.setEditing(false, animated: true)
         self.tableView.tasksTable.reloadData()
     }
-
+    
+    func setupRealm(){
+        let username = "username"
+        let password = "password"
+        
+        SyncUser.logIn(with: .usernamePassword(username: username, password: password, register: false), server: URL(string: "http://127.0.0.1:9080")!) { user, error in
+            guard let user = user else {
+                fatalError(String(describing: error))
+            }
+            
+            DispatchQueue.main.async {
+                // Open Realm
+                let configuration = Realm.Configuration(
+                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://127.0.0.1:9080/~/realmtasks")!)
+                )
+                self.realm = try! Realm(configuration: configuration)
+                
+                // Show initial tasks
+                func updateList() {
+                    if self.lists.realm == nil, let list = uiRealm.objects(TaskList.self).first {
+                        self.lists = list.tasks
+                    }
+                    self.tableView.tasksTable.reloadData()
+                }
+                updateList()
+                
+                // Notify us when Realm changes
+                self.notificationToken = self.realm.addNotificationBlock { _ in
+                    updateList()
+                }
+            }
+        }
+    }
+    deinit{
+        notificationToken.stop()
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
             return UIStatusBarStyle.lightContent

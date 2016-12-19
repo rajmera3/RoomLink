@@ -16,10 +16,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var navBar: UINavigationBar = UINavigationBar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
     
     
-    var lists: List<Task>!
-    var notificationToken: NotificationToken!
+    var lists: Results<TaskList>!
     var realm: Realm!
-    //var grocerylist: [String] = []
     
     func configureView(){
         self.view.addSubview(tableView)
@@ -27,46 +25,11 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func readTasksandUpdateUI(){
-        //lists = uiRealm.objects(Task.self)
+        lists = uiRealm.objects(TaskList.self)
         self.tableView.tasksTable.setEditing(false, animated: true)
         self.tableView.tasksTable.reloadData()
     }
     
-    func setupRealm(){
-        let username = "username"
-        let password = "password"
-        
-        SyncUser.logIn(with: .usernamePassword(username: username, password: password, register: false), server: URL(string: "http://127.0.0.1:9080")!) { user, error in
-            guard let user = user else {
-                fatalError(String(describing: error))
-            }
-            
-            DispatchQueue.main.async {
-                // Open Realm
-                let configuration = Realm.Configuration(
-                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://127.0.0.1:9080/~/realmtasks")!)
-                )
-                self.realm = try! Realm(configuration: configuration)
-                
-                // Show initial tasks
-                func updateList() {
-                    if self.lists.realm == nil, let list = uiRealm.objects(TaskList.self).first {
-                        self.lists = list.tasks
-                    }
-                    self.tableView.tasksTable.reloadData()
-                }
-                updateList()
-                
-                // Notify us when Realm changes
-                self.notificationToken = self.realm.addNotificationBlock { _ in
-                    updateList()
-                }
-            }
-        }
-    }
-    deinit{
-        notificationToken.stop()
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
             return UIStatusBarStyle.lightContent
@@ -89,7 +52,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         navItem.rightBarButtonItem = addButton
         navBar.items = [navItem]
         navBar.titleTextAttributes = [NSFontAttributeName: UIFont(name:"Avenir-Medium", size: 20.0)!]
-        navBar.barTintColor = UIColor.init(r: 162, g: 212, b: 171, a: 1.0)
+        navBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        navBar.barTintColor = UIColor.init(r: 44 , g: 62, b: 80, a: 1.0)
     }
     
     func tableView(_:UITableView, numberOfRowsInSection section: Int)-> Int {
@@ -117,15 +81,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             newTaskList.name = alertTextField!.text!
             try! uiRealm.write{
                 uiRealm.add(newTaskList)
-                //newTaskList.name.append(newTaskList.name)
                 self.readTasksandUpdateUI()
                 print("k")
             }
-            
-//            self.grocerylist.append(alertTextField!.text!)
-//            self.tableView.tasksTable.reloadData()
-
-            }
+    }
         let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel)
         
         alertController.addTextField(configurationHandler: nil)

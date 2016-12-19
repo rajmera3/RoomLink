@@ -15,8 +15,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     var loginView = LoginView(frame:CGRect(x: 0, y: 0, width: MWConstants.screenWidth, height: MWConstants.screenHeight))
     
     
+    func configureButtons(){
+        loginView.loginBtn.addTarget(self, action: #selector(login), for: .touchUpInside)
+    }
+    
     func configureView(){
-        //configureButtons()
+        configureButtons()
         self.view.addSubview(loginView)
     }
     
@@ -28,7 +32,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return UIStatusBarStyle.lightContent
+    }
     
+    func login(){
+        let user = User()
+        user.email = loginView.emailTF.text!
+        user.password = loginView.passTF.text!
+        
+//        try! uiRealm.write {
+//            uiRealm.add(user)
+//        }
+        
+        
+        
+        self.dismiss(animated: true, completion: nil)
+        self.present(TableViewController(), animated: true, completion: nil)
+    }
 
 
 

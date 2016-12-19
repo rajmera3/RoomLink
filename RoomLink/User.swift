@@ -16,6 +16,8 @@ class User: Object {
     dynamic var uid = ""
     dynamic var password = ""
     dynamic var houseid = ""
+    //dynamic var tasks = Task()?
+    
     
     
     
